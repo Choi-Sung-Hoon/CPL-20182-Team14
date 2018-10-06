@@ -4,7 +4,7 @@ import pygal
 import sys
 
 
-HOP_LIMIT = 1999
+HOP_LIMIT = 2999
 HOP_STEP = 20
 
 LINE_STYLE_ODD = {'width': 3}

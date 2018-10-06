@@ -20,7 +20,8 @@ if __name__ == '__main__':
                     print(cmdline)
                     subprocess.call(['bash', '-c', cmdline],
                                     stdout=sys.stdout, stderr=sys.stderr)
-                    servers_count += 1
+                                    
+                servers_count += 1
     else:
         servers_count = int(sys.argv[1])
 
