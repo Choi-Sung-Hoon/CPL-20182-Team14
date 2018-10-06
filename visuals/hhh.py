@@ -54,8 +54,8 @@ if __name__ == '__main__':
         style=custom_style
     )
     line_chart.title = sys.argv[2]
-    line_chart.x_title = 'Connection time'
-    line_chart.y_title = 'Requests count with connection time'
+    line_chart.x_title = 'Turnaround time'
+    line_chart.y_title = 'Requests count with turnaround time'
     line_chart.x_labels = [ttime for ttime in range(0, HOP_LIMIT, HOP_STEP)]
 
     for i, tsv_file in enumerate(sys.argv[3:]):
