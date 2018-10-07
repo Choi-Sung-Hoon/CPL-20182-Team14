@@ -45,16 +45,17 @@ if __name__ == '__main__':
         show_dots=False,
         x_label_rotation=1,
         x_labels_major_every=HOP_LIMIT // (HOP_STEP * 10),
-        legend_at_bottom=True,
-        legend_at_bottom_columns=4,
-        legend_box_size=24,
-        legend_font_size=18,
+        # legend_at_bottom=True,
+        # legend_at_bottom_columns=4,
+        # legend_box_size=24,
+        # legend_font_size=18,
+        show_legend=False,
         margin=54,
         show_minor_x_labels=False,
         style=custom_style
     )
     line_chart.title = sys.argv[2]
-    line_chart.x_title = 'Turnaround time'
+    line_chart.x_title = 'Turnaround time (ms)'
     line_chart.y_title = 'Requests count with turnaround time'
     line_chart.x_labels = [ttime for ttime in range(0, HOP_LIMIT, HOP_STEP)]
 
@@ -67,4 +68,6 @@ if __name__ == '__main__':
             stroke_style = LINE_STYLE_EVEN
         line_chart.add('Cluster ' + chr(ord('A') + i), hop_counts, stroke_style=stroke_style)
     
-    line_chart.render_to_file(sys.argv[1])
+    line_chart.render_to_file(sys.argv[1] + '.svg')
+    line_chart.render_to_png(sys.argv[1] + '.png')
+    
