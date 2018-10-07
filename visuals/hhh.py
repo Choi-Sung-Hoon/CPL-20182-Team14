@@ -68,4 +68,6 @@ if __name__ == '__main__':
             stroke_style = LINE_STYLE_EVEN
         line_chart.add('Cluster ' + chr(ord('A') + i), hop_counts, stroke_style=stroke_style)
     
-    line_chart.render_to_file(sys.argv[1])
+    line_chart.render_to_file(sys.argv[1] + '.svg')
+    line_chart.render_to_png(sys.argv[1] + '.png')
+    

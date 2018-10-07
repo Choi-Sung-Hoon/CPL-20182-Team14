@@ -1,6 +1,6 @@
-*.svg
-
-*.tsv
+apache-bench/*.svg
+apache-bench/*.tsv
+apache-bench/*.png
 
 ### Python ###
 # Byte-compiled / optimized / DLL files
