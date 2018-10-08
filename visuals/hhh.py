@@ -4,7 +4,7 @@ import pygal
 import sys
 
 
-HOP_LIMIT = 2999
+HOP_LIMIT = 2000
 HOP_STEP = 20
 
 LINE_STYLE_ODD = {'width': 3}
@@ -51,6 +51,7 @@ if __name__ == '__main__':
         # legend_font_size=18,
         show_legend=False,
         margin=54,
+        range=(0, 300),
         show_minor_x_labels=False,
         style=custom_style
     )
