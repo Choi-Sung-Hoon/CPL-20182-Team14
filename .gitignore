@@ -7,3 +7,7 @@ apache-bench/*.png
 __pycache__/
 *.py[cod]
 *$py.class
+
+# Venv
+venv/
+.venv/
