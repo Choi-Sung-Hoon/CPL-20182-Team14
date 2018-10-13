@@ -2,7 +2,7 @@ import subprocess
 import sys
 
 
-POOLS = [4, 16]
+POOLS = [64, 128]
 
 
 if __name__ == '__main__':
