@@ -5,7 +5,7 @@ import sys
 
 
 HOP_LIMIT = 1000
-HOP_STEP = 10
+HOP_STEP = 5
 
 LINE_STYLE_ODD = {'width': 3}
 LINE_STYLE_EVEN = {'width': 4, 'dasharray': '9, 6', 'linecap': 'round', 'linejoin': 'round'}
@@ -55,7 +55,7 @@ if __name__ == '__main__':
         # legend_font_size=18,
         show_legend=False,
         # margin=54,
-        range=(0, 60000),
+        range=(0, 300000),
         show_minor_x_labels=False,
         style=custom_style
     )
