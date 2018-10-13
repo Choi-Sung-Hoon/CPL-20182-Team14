@@ -23,8 +23,8 @@ def read_tsv(filename: str) -> list:
             except IndexError:
                 pass
     # Adjust to messages per second
-    for i, count in enumerate(counts_per_hop):
-        counts_per_hop[i] = count * 1000 / HOP_STEP
+    # for i, count in enumerate(counts_per_hop):
+    #     counts_per_hop[i] = count * 1000 / HOP_STEP
     return counts_per_hop
 
 
@@ -55,13 +55,13 @@ if __name__ == '__main__':
         # legend_font_size=18,
         show_legend=False,
         # margin=54,
-        range=(0, 300000),
+        range=(0, 1500),
         show_minor_x_labels=False,
         style=custom_style
     )
     line_chart.title = sys.argv[2]
     line_chart.x_title = 'Turnaround time (ms)'
-    line_chart.y_title = 'Requests with turnaround time per second (msg/sec)'
+    line_chart.y_title = 'Request counts'
     line_chart.x_labels = [ttime for ttime in range(0, HOP_LIMIT, HOP_STEP)]
 
     for i, tsv_file in enumerate(sys.argv[3:]):
