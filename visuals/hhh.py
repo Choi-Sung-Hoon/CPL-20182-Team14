@@ -4,8 +4,8 @@ import pygal
 import sys
 
 
-HOP_LIMIT = 2000
-HOP_STEP = 20
+HOP_LIMIT = 1000
+HOP_STEP = 10
 
 LINE_STYLE_ODD = {'width': 3}
 LINE_STYLE_EVEN = {'width': 4, 'dasharray': '9, 6', 'linecap': 'round', 'linejoin': 'round'}
@@ -14,6 +14,7 @@ LINE_STYLE_EVEN = {'width': 4, 'dasharray': '9, 6', 'linecap': 'round', 'linejoi
 
 def read_tsv(filename: str) -> list:
     counts_per_hop = [0 for _ in range((HOP_LIMIT + 1) // HOP_STEP)]
+    # Read the TSV file
     with open(filename) as tsv:
         for row in csv.DictReader(tsv, delimiter="\t"):
             ttime_index = int(row['ttime']) // HOP_STEP
@@ -21,6 +22,9 @@ def read_tsv(filename: str) -> list:
                 counts_per_hop[ttime_index] += 1
             except IndexError:
                 pass
+    # Adjust to messages per second
+    for i, count in enumerate(counts_per_hop):
+        counts_per_hop[i] = count * 1000 / HOP_STEP
     return counts_per_hop
 
 
@@ -50,14 +54,14 @@ if __name__ == '__main__':
         # legend_box_size=24,
         # legend_font_size=18,
         show_legend=False,
-        margin=54,
-        range=(0, 400),
+        # margin=54,
+        range=(0, 38000),
         show_minor_x_labels=False,
         style=custom_style
     )
     line_chart.title = sys.argv[2]
     line_chart.x_title = 'Turnaround time (ms)'
-    line_chart.y_title = 'Requests count with turnaround time'
+    line_chart.y_title = 'Requests with turnaround time per second (msg/sec)'
     line_chart.x_labels = [ttime for ttime in range(0, HOP_LIMIT, HOP_STEP)]
 
     for i, tsv_file in enumerate(sys.argv[3:]):
