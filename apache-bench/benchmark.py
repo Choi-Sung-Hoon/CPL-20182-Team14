@@ -8,7 +8,6 @@ if __name__ == '__main__':
     import sys
     import os
 
-    pool = 4
     servers_count = 0
 
     # Change directory
@@ -50,7 +49,8 @@ if __name__ == '__main__':
                               ''.format(pool, chr(ord('a') + i))
                               for i in range(servers_count)])
         cmdline = ('python3 ../visuals/hhh.py test-{0:0>2} '
-                   '"Test with {0} pools" {1}'.format(pool, files_str))
+                   '"Turnaround time distribution ({0} pools)" '
+                   '{1}'.format(pool, files_str))
         print(cmdline)
         subprocess.call(['bash', '-c', cmdline],
                         stdout=sys.stdout, stderr=sys.stderr)
