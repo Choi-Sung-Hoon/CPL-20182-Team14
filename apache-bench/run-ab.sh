@@ -2,7 +2,8 @@
 cd "$(dirname "$0")"
 
 SERVER_IP=$1
-POOL_NUM=$2
-FILE_NAME=$3
+POOL_COUNT=$2
+MSG_COUNT=$3
+FILE_NAME=$4
 
-ab -c $2 -n 1000 -g $FILE_NAME http://${SERVER_IP}/
+ab -c $POOL_COUNT -n $MSG_COUNT -g $FILE_NAME http://${SERVER_IP}/

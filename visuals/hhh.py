@@ -55,7 +55,7 @@ if __name__ == '__main__':
         # legend_font_size=18,
         show_legend=False,
         # margin=54,
-        range=(0, 38000),
+        range=(0, 60000),
         show_minor_x_labels=False,
         style=custom_style
     )
