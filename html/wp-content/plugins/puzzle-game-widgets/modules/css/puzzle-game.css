@@ -1,0 +1,544 @@
+.puzzle-game img{
+	cursor:pointer;
+}
+
+.puzzle-game-container{
+	background-color:#FFFFFF;
+	border:1px solid #333333;
+	margin:0 !important;
+	padding:0 !important;
+}
+.puzzle-game-container table{
+	margin:0 !important;
+	padding:0 !important;
+	border:none !important;
+	border-collapse:collapse !important;
+}
+.puzzle-game-container td{
+	margin:0 !important;
+	padding:0 !important;
+	border:none !important;
+	background-repeat:no-repeat;
+}
+
+/* Puzzle Small Start */
+.puzzle-game-3-small, .puzzle-game-4-small, .puzzle-game-5-small{
+	width:120px;
+	height:120px;
+}
+.puzzle-game-3-small td{
+	width:40px;
+	height:40px;
+}
+.puzzle-game-3-small .piece-1{
+	background-position:0 0;
+}
+.puzzle-game-3-small .piece-2{
+	background-position:-40px 0;
+}
+.puzzle-game-3-small .piece-3{
+	background-position:-80px 0;
+}
+.puzzle-game-3-small .piece-4{
+	background-position:0 -40px;
+}
+.puzzle-game-3-small .piece-5{
+	background-position:-40px -40px;
+}
+.puzzle-game-3-small .piece-6{
+	background-position:-80px -40px;
+}
+.puzzle-game-3-small .piece-7{
+	background-position:0 -80px;
+}
+.puzzle-game-3-small .piece-8{
+	background-position:-40px -80px;
+}
+.puzzle-game-3-small .piece-9{
+	background-position:-80px -80px;
+}
+
+.puzzle-game-4-small td{
+	width:30px;
+	height:30px;
+}
+.puzzle-game-4-small .piece-1{
+	background-position:0 0;
+}
+.puzzle-game-4-small .piece-2{
+	background-position:-30px 0;
+}
+.puzzle-game-4-small .piece-3{
+	background-position:-60px 0;
+}
+.puzzle-game-4-small .piece-4{
+	background-position:-90px 0;
+}
+.puzzle-game-4-small .piece-5{
+	background-position:0 -30px;
+}
+.puzzle-game-4-small .piece-6{
+	background-position:-30px -30px;
+}
+.puzzle-game-4-small .piece-7{
+	background-position:-60px -30px;
+}
+.puzzle-game-4-small .piece-8{
+	background-position:-90px -30px;
+}
+.puzzle-game-4-small .piece-9{
+	background-position:0 -60px;
+}
+.puzzle-game-4-small .piece-10{
+	background-position:-30px -60px;
+}
+.puzzle-game-4-small .piece-11{
+	background-position:-60px -60px;
+}
+.puzzle-game-4-small .piece-12{
+	background-position:-90px -60px;
+}
+.puzzle-game-4-small .piece-13{
+	background-position:0 -90px;
+}
+.puzzle-game-4-small .piece-14{
+	background-position:-30px -90px;
+}
+.puzzle-game-4-small .piece-15{
+	background-position:-60px -90px;
+}
+.puzzle-game-4-small .piece-16{
+	background-position:-90px -90px;
+}
+
+.puzzle-game-5-small td{
+	width:24px;
+	height:24px;
+}
+.puzzle-game-5-small .piece-1{
+	background-position:0 0;
+}
+.puzzle-game-5-small .piece-2{
+	background-position:-24px 0;
+}
+.puzzle-game-5-small .piece-3{
+	background-position:-48px 0;
+}
+.puzzle-game-5-small .piece-4{
+	background-position:-72px 0;
+}
+.puzzle-game-5-small .piece-5{
+	background-position:-96px 0;
+}
+.puzzle-game-5-small .piece-6{
+	background-position:0 -24px;
+}
+.puzzle-game-5-small .piece-7{
+	background-position:-24px -24px;
+}
+.puzzle-game-5-small .piece-8{
+	background-position:-48px -24px;
+}
+.puzzle-game-5-small .piece-9{
+	background-position:-72px -24px;
+}
+.puzzle-game-5-small .piece-10{
+	background-position:-96px -24px;
+}
+.puzzle-game-5-small .piece-11{
+	background-position:0 -48px;
+}
+.puzzle-game-5-small .piece-12{
+	background-position:-24px -48px;
+}
+.puzzle-game-5-small .piece-13{
+	background-position:-48px -48px;
+}
+.puzzle-game-5-small .piece-14{
+	background-position:-72px -48px;
+}
+.puzzle-game-5-small .piece-15{
+	background-position:-96px -48px;
+}
+.puzzle-game-5-small .piece-16{
+	background-position:0 -72px;
+}
+.puzzle-game-5-small .piece-17{
+	background-position:-24px -72px;
+}
+.puzzle-game-5-small .piece-18{
+	background-position:-48px -72px;
+}
+.puzzle-game-5-small .piece-19{
+	background-position:-72px -72px;
+}
+.puzzle-game-5-small .piece-20{
+	background-position:-96px -72px;
+}
+.puzzle-game-5-small .piece-21{
+	background-position:0 -96px;
+}
+.puzzle-game-5-small .piece-22{
+	background-position:-24px -96px;
+}
+.puzzle-game-5-small .piece-23{
+	background-position:-48px -96px;
+}
+.puzzle-game-5-small .piece-24{
+	background-position:-72px -96px;
+}
+.puzzle-game-5-small .piece-25{
+	background-position:-96px -96px;
+}
+/* Puzzle Small End */
+
+/* Puzzle Medium Start */
+.puzzle-game-3-medium, .puzzle-game-4-medium, .puzzle-game-5-medium{
+	width:180px;
+	height:180px;
+}
+.puzzle-game-3-medium td{
+	width:60px;
+	height:60px;
+}
+.puzzle-game-3-medium .piece-1{
+	background-position:0 0;
+}
+.puzzle-game-3-medium .piece-2{
+	background-position:-60px 0;
+}
+.puzzle-game-3-medium .piece-3{
+	background-position:-120px 0;
+}
+.puzzle-game-3-medium .piece-4{
+	background-position:0 -60px;
+}
+.puzzle-game-3-medium .piece-5{
+	background-position:-60px -60px;
+}
+.puzzle-game-3-medium .piece-6{
+	background-position:-120px -60px;
+}
+.puzzle-game-3-medium .piece-7{
+	background-position:0 -120px;
+}
+.puzzle-game-3-medium .piece-8{
+	background-position:-60px -120px;
+}
+.puzzle-game-3-medium .piece-9{
+	background-position:-120px -120px;
+}
+
+.puzzle-game-4-medium td{
+	width:45px;
+	height:45px;
+}
+.puzzle-game-4-medium .piece-1{
+	background-position:0 0;
+}
+.puzzle-game-4-medium .piece-2{
+	background-position:-45px 0;
+}
+.puzzle-game-4-medium .piece-3{
+	background-position:-90px 0;
+}
+.puzzle-game-4-medium .piece-4{
+	background-position:-135px 0;
+}
+.puzzle-game-4-medium .piece-5{
+	background-position:0 -45px;
+}
+.puzzle-game-4-medium .piece-6{
+	background-position:-45px -45px;
+}
+.puzzle-game-4-medium .piece-7{
+	background-position:-90px -45px;
+}
+.puzzle-game-4-medium .piece-8{
+	background-position:-135px -45px;
+}
+.puzzle-game-4-medium .piece-9{
+	background-position:0 -90px;
+}
+.puzzle-game-4-medium .piece-10{
+	background-position:-45px -90px;
+}
+.puzzle-game-4-medium .piece-11{
+	background-position:-90px -90px;
+}
+.puzzle-game-4-medium .piece-12{
+	background-position:-135px -90px;
+}
+.puzzle-game-4-medium .piece-13{
+	background-position:0 -135px;
+}
+.puzzle-game-4-medium .piece-14{
+	background-position:-45px -135px;
+}
+.puzzle-game-4-medium .piece-15{
+	background-position:-90px -135px;
+}
+.puzzle-game-4-medium .piece-16{
+	background-position:-135px -135px;
+}
+
+.puzzle-game-5-medium td{
+	width:36px;
+	height:36px;
+}
+.puzzle-game-5-medium .piece-1{
+	background-position:0 0;
+}
+.puzzle-game-5-medium .piece-2{
+	background-position:-36px 0;
+}
+.puzzle-game-5-medium .piece-3{
+	background-position:-72px 0;
+}
+.puzzle-game-5-medium .piece-4{
+	background-position:-108px 0;
+}
+.puzzle-game-5-medium .piece-5{
+	background-position:-144px 0;
+}
+.puzzle-game-5-medium .piece-6{
+	background-position:0 -36px;
+}
+.puzzle-game-5-medium .piece-7{
+	background-position:-36px -36px;
+}
+.puzzle-game-5-medium .piece-8{
+	background-position:-72px -36px;
+}
+.puzzle-game-5-medium .piece-9{
+	background-position:-108px -36px;
+}
+.puzzle-game-5-medium .piece-10{
+	background-position:-144px -36px;
+}
+.puzzle-game-5-medium .piece-11{
+	background-position:0 -72px;
+}
+.puzzle-game-5-medium .piece-12{
+	background-position:-36px -72px;
+}
+.puzzle-game-5-medium .piece-13{
+	background-position:-72px -72px;
+}
+.puzzle-game-5-medium .piece-14{
+	background-position:-108px -72px;
+}
+.puzzle-game-5-medium .piece-15{
+	background-position:-144px -72px;
+}
+.puzzle-game-5-medium .piece-16{
+	background-position:0 -108px;
+}
+.puzzle-game-5-medium .piece-17{
+	background-position:-36px -108px;
+}
+.puzzle-game-5-medium .piece-18{
+	background-position:-72px -108px;
+}
+.puzzle-game-5-medium .piece-19{
+	background-position:-108px -108px;
+}
+.puzzle-game-5-medium .piece-20{
+	background-position:-144px -108px;
+}
+.puzzle-game-5-medium .piece-21{
+	background-position:0 -144px;
+}
+.puzzle-game-5-medium .piece-22{
+	background-position:-36px -144px;
+}
+.puzzle-game-5-medium .piece-23{
+	background-position:-72px -144px;
+}
+.puzzle-game-5-medium .piece-24{
+	background-position:-108px -144px;
+}
+.puzzle-game-5-medium .piece-25{
+	background-position:-144px -144px;
+}
+/* Puzzle Medium End */
+
+/* Puzzle Large Start */
+.puzzle-game-3-large, .puzzle-game-4-large, .puzzle-game-5-large{
+	width:240px;
+	height:240px;
+}
+.puzzle-game-3-large td{
+	width:80px;
+	height:80px;
+}
+.puzzle-game-3-large .piece-1{
+	background-position:0 0;
+}
+.puzzle-game-3-large .piece-2{
+	background-position:-80px 0;
+}
+.puzzle-game-3-large .piece-3{
+	background-position:-160px 0;
+}
+.puzzle-game-3-large .piece-4{
+	background-position:0 -80px;
+}
+.puzzle-game-3-large .piece-5{
+	background-position:-80px -80px;
+}
+.puzzle-game-3-large .piece-6{
+	background-position:-160px -80px;
+}
+.puzzle-game-3-large .piece-7{
+	background-position:0 -160px;
+}
+.puzzle-game-3-large .piece-8{
+	background-position:-80px -160px;
+}
+.puzzle-game-3-large .piece-9{
+	background-position:-160px -160px;
+}
+
+.puzzle-game-4-large td{
+	width:60px;
+	height:60px;
+}
+.puzzle-game-4-large .piece-1{
+	background-position:0 0;
+}
+.puzzle-game-4-large .piece-2{
+	background-position:-60px 0;
+}
+.puzzle-game-4-large .piece-3{
+	background-position:-120px 0;
+}
+.puzzle-game-4-large .piece-4{
+	background-position:-180px 0;
+}
+.puzzle-game-4-large .piece-5{
+	background-position:0 -60px;
+}
+.puzzle-game-4-large .piece-6{
+	background-position:-60px -60px;
+}
+.puzzle-game-4-large .piece-7{
+	background-position:-120px -60px;
+}
+.puzzle-game-4-large .piece-8{
+	background-position:-180px -60px;
+}
+.puzzle-game-4-large .piece-9{
+	background-position:0 -120px;
+}
+.puzzle-game-4-large .piece-10{
+	background-position:-60px -120px;
+}
+.puzzle-game-4-large .piece-11{
+	background-position:-120px -120px;
+}
+.puzzle-game-4-large .piece-12{
+	background-position:-180px -120px;
+}
+.puzzle-game-4-large .piece-13{
+	background-position:0 -180px;
+}
+.puzzle-game-4-large .piece-14{
+	background-position:-60px -180px;
+}
+.puzzle-game-4-large .piece-15{
+	background-position:-120px -180px;
+}
+.puzzle-game-4-large .piece-16{
+	background-position:-180px -180px;
+}
+
+.puzzle-game-5-large td{
+	width:48px;
+	height:48px;
+}
+.puzzle-game-5-large .piece-1{
+	background-position:0 0;
+}
+.puzzle-game-5-large .piece-2{
+	background-position:-48px 0;
+}
+.puzzle-game-5-large .piece-3{
+	background-position:-96px 0;
+}
+.puzzle-game-5-large .piece-4{
+	background-position:-144px 0;
+}
+.puzzle-game-5-large .piece-5{
+	background-position:-192px 0;
+}
+.puzzle-game-5-large .piece-6{
+	background-position:0 -48px;
+}
+.puzzle-game-5-large .piece-7{
+	background-position:-48px -48px;
+}
+.puzzle-game-5-large .piece-8{
+	background-position:-96px -48px;
+}
+.puzzle-game-5-large .piece-9{
+	background-position:-144px -48px;
+}
+.puzzle-game-5-large .piece-10{
+	background-position:-192px -48px;
+}
+.puzzle-game-5-large .piece-11{
+	background-position:0 -96px;
+}
+.puzzle-game-5-large .piece-12{
+	background-position:-48px -96px;
+}
+.puzzle-game-5-large .piece-13{
+	background-position:-96px -96px;
+}
+.puzzle-game-5-large .piece-14{
+	background-position:-144px -96px;
+}
+.puzzle-game-5-large .piece-15{
+	background-position:-192px -96px;
+}
+.puzzle-game-5-large .piece-16{
+	background-position:0 -144px;
+}
+.puzzle-game-5-large .piece-17{
+	background-position:-48px -144px;
+}
+.puzzle-game-5-large .piece-18{
+	background-position:-96px -144px;
+}
+.puzzle-game-5-large .piece-19{
+	background-position:-144px -144px;
+}
+.puzzle-game-5-large .piece-20{
+	background-position:-192px -144px;
+}
+.puzzle-game-5-large .piece-21{
+	background-position:0 -192px;
+}
+.puzzle-game-5-large .piece-22{
+	background-position:-48px -192px;
+}
+.puzzle-game-5-large .piece-23{
+	background-position:-96px -192px;
+}
+.puzzle-game-5-large .piece-24{
+	background-position:-144px -192px;
+}
+.puzzle-game-5-large .piece-25{
+	background-position:-192px -192px;
+}
+/* Puzzle Large End */
+
+
+.puzzle-game-container td{
+	cursor:pointer;
+}
+.puzzle-game-container td.open{
+	background:#FFFFFF;
+	cursor:default;
+}
