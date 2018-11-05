@@ -1,0 +1,5 @@
+package cdp1.kube.testserver;
+
+class ServerSession {
+
+}
