@@ -15,7 +15,7 @@ class Listener implements Runnable {
 
 	@Override
 	public void run() {
-		System.out.println("Server multithread mode: ");
+		System.out.println("Server multithread mode: " + Boolean.toString(mMultiThreaded));
 		
 		try (ServerSocket serverSocket = new ServerSocket(mPort)) {
 			System.out.println("Server is listening on port " + mPort);
