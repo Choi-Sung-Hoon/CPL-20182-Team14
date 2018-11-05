@@ -3,14 +3,14 @@ package cdp1.kube.testserver;
 import java.util.Scanner;
 
 class ServerLogic {
-	int nth;
+	long nth;
 	
-	public ServerLogic(int n)
+	public ServerLogic(long n)
 	{
 		this.nth = n;
 	}
 
-	int getNthPrimeNumber()
+	long getNthPrimeNumber()
 	{
 		int cnt=0;
 		int number=2;
@@ -30,7 +30,7 @@ class ServerLogic {
 		return number;
 	}
 	
-	boolean isPrimeNumber(int n)
+	boolean isPrimeNumber(long n)
 	{
 		boolean isPrime = true;
 		int i = 2;
@@ -52,7 +52,7 @@ class ServerLogic {
 	{
 		ServerLogic test;
 		int n;
-		int primeN;
+		long primeN;
 		
 		Scanner scan = new Scanner(System.in);
 		System.out.println("get Nth prime number : ");

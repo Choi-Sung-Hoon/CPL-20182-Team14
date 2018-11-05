@@ -24,12 +24,12 @@ class ServerSession extends Thread {
 			PrintWriter writer = new PrintWriter(output, true);
 			
 			String text;
-			int n, prime;
+			long n, prime;
 			
 			text = reader.readLine();
 			n = Integer.parseInt(text);
 			prime = new ServerLogic(n).getNthPrimeNumber();
-			writer.println(Integer.toString(prime));
+			writer.println(Long.toString(prime));
 		} catch (Exception e) {
 			System.err.println("Session exception: " + e.getMessage());
 			System.err.flush();
