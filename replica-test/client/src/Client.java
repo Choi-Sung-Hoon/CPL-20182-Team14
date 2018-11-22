@@ -4,9 +4,13 @@ import java.io.InputStreamReader;
 import java.io.OutputStream;
 import java.io.PrintWriter;
 import java.net.Socket;
+import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Scanner;
+import java.util.concurrent.ConcurrentLinkedQueue;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 
 import javax.swing.SwingWorker;
 
@@ -24,6 +28,9 @@ public class Client
 	XYChart chart;
 	static double elapsedTime = 0.0;
 	
+	static private List<Worker> workers;
+	static private ArrayList<Long> results;
+	
 	public static void main(String[] args) throws Exception
 	{
 		Scanner scanner = new Scanner(System.in);
@@ -31,40 +38,37 @@ public class Client
 		int port = Integer.parseInt(args[0]);
 		long startTime, stopTime;
 		
+		int pool_cnt=Integer.parseInt(args[1]);
+		workers = new ArrayList<Worker>();
+		ExecutorService executorService=Executors.newFixedThreadPool(pool_cnt);
+		
+		results = new ArrayList();
+		
+		ConcurrentLinkedQueue<Integer> taskQ=new ConcurrentLinkedQueue<>();
+		for(int i=1; i<=1000; i+= 10)
+			taskQ.offer(i);
+		
+		
+		
+		int cnt=0;
+		while(taskQ.peek() != null)
+		{
+			if(cnt++==100)
+				break;
+			Worker temp_worker = new Worker(taskQ, hostname, port);
+			workers.add(temp_worker);
+			executorService.execute(temp_worker);
+		}
+		
+		
 		// create a graph
 		Client swingWorkerRealTime = new Client();
 		swingWorkerRealTime.go();
 		
-		for(int i = 1; i <= 5000; i += 10){
-			try(Socket socket = new Socket(hostname, port))
-			{
-				System.out.println("Client is connected");
 				
-				InputStream input = socket.getInputStream();
-				OutputStream output = socket.getOutputStream();
-				BufferedReader reader = new BufferedReader(new InputStreamReader(input));
-				PrintWriter writer = new PrintWriter(output, true);
-				String response;
-				
-				// input
-				writer.println(Integer.toString(i));
-				
-				startTime = System.currentTimeMillis();
-				while((response=reader.readLine())!=null)
-					System.out.println(response);
-				stopTime = System.currentTimeMillis();
-	
-				elapsedTime = stopTime - startTime;
-				System.out.println("Time : " + elapsedTime);
-			}
-			catch(Exception e)
-			{
-				e.printStackTrace();
-			}
-		}
-		
 		//System.out.println("Client End.");
 		//scanner.close();
+		executorService.shutdown();
 	}
 
 	private void go()
@@ -99,9 +103,18 @@ public class Client
 		@Override
 		protected Boolean doInBackground() throws Exception
 		{
+			int index=0;
 			while (!isCancelled())
 			{
-				fifo.add(elapsedTime);
+				//fifo.add((double)workers.get(index++).resultQ.peek());
+				if(workers.get(index).resultQ.peek() != null)
+				{
+					//System.out.println("test print : " + workers.get(index++).resultQ.peek() + ", " + workers.get(index++).resultQ.poll());
+					fifo.add((double)workers.get(index++).resultQ.peek());
+					results.add(workers.get(index).resultQ.poll());
+					if(index >= workers.size())
+						break;
+				}
 				
 				if (fifo.size() > 100)
 					fifo.removeFirst();
