@@ -22,27 +22,31 @@ public class Worker implements Runnable {
 
 	@Override
 	public void run() {
-		try (Socket socket = new Socket(hostname, port)) {
-			InputStream input = socket.getInputStream();
-			BufferedReader reader = new BufferedReader(new InputStreamReader(input));
-
-			OutputStream output = socket.getOutputStream();
-			PrintWriter writer = new PrintWriter(output, true);
-
+		while (true) {
 			Integer n = taskQ.poll();
 			if (n == null) {
-				return;
+				break;
 			}
-			writer.println(n.toString());
 
-			long startTime = System.currentTimeMillis();
-			String response = reader.readLine();
-			long stopTime = System.currentTimeMillis();
-			long elapsedTime = stopTime - startTime;
-			
-			resultQ.add(Long.valueOf(elapsedTime));
-		} catch (Exception e) {
-			e.printStackTrace();
+			try (Socket socket = new Socket(hostname, port)) {
+				InputStream input = socket.getInputStream();
+				BufferedReader reader = new BufferedReader(new InputStreamReader(input));
+
+				OutputStream output = socket.getOutputStream();
+				PrintWriter writer = new PrintWriter(output, true);
+
+				writer.println(n.toString());
+
+				long startTime = System.currentTimeMillis();
+				String response = reader.readLine();
+				System.out.println(response);
+				long stopTime = System.currentTimeMillis();
+				long elapsedTime = stopTime - startTime;
+				
+				resultQ.add(Long.valueOf(elapsedTime));
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
 		}
 	}
 

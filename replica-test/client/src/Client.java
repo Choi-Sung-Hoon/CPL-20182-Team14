@@ -28,8 +28,7 @@ public class Client
 	XYChart chart;
 	static double elapsedTime = 0.0;
 	
-	static private List<Worker> workers;
-	static private ArrayList<Long> results;
+	static private Worker[] workers;
 	
 	public static void main(String[] args) throws Exception
 	{
@@ -39,25 +38,17 @@ public class Client
 		long startTime, stopTime;
 		
 		int pool_cnt=Integer.parseInt(args[1]);
-		workers = new ArrayList<Worker>();
 		ExecutorService executorService=Executors.newFixedThreadPool(pool_cnt);
-		
-		results = new ArrayList();
 		
 		ConcurrentLinkedQueue<Integer> taskQ=new ConcurrentLinkedQueue<>();
 		for(int i=1; i<=1000; i+= 10)
 			taskQ.offer(i);
 		
-		
-		
-		int cnt=0;
-		while(taskQ.peek() != null)
+		workers = new Worker[pool_cnt];
+		for(int i=0; i<pool_cnt; i++)
 		{
-			if(cnt++==100)
-				break;
-			Worker temp_worker = new Worker(taskQ, hostname, port);
-			workers.add(temp_worker);
-			executorService.execute(temp_worker);
+			workers[i] = new Worker(taskQ, hostname, port);
+			executorService.execute(workers[i]);
 		}
 		
 		
@@ -103,19 +94,9 @@ public class Client
 		@Override
 		protected Boolean doInBackground() throws Exception
 		{
-			int index=0;
 			while (!isCancelled())
 			{
-				//fifo.add((double)workers.get(index++).resultQ.peek());
-				fifo.add((double)Worker.resultQ.poll());
-				/*if(workers.get(index).resultQ.peek() != null)
-				{
-					//System.out.println("test print : " + workers.get(index++).resultQ.peek() + ", " + workers.get(index++).resultQ.poll());
-					fifo.add((double)workers.get(index++).resultQ.peek());
-					results.add(workers.get(index).resultQ.poll());
-					if(index >= workers.size())
-						break;
-				}*/
+				fifo.add((double)Worker.resultQ.peek());
 				
 				if (fifo.size() > 100)
 					fifo.removeFirst();
