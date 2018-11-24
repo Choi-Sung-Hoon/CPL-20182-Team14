@@ -41,7 +41,7 @@ public class Client
 		ExecutorService executorService=Executors.newFixedThreadPool(pool_cnt);
 		
 		ConcurrentLinkedQueue<Integer> taskQ=new ConcurrentLinkedQueue<>();
-		for(int i=1; i<=1000; i+= 10)
+		for(int i=1; i<=1000; i+= 1)
 			taskQ.offer(i);
 		
 		workers = new Worker[pool_cnt];
