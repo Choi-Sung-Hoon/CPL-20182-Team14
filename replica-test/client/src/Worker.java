@@ -37,7 +37,6 @@ public class Worker implements Runnable {
 
 			long startTime = System.currentTimeMillis();
 			String response = reader.readLine();
-			System.out.println(n + "번째 소수 : " + response);
 			long stopTime = System.currentTimeMillis();
 			long elapsedTime = stopTime - startTime;
 			

@@ -107,14 +107,15 @@ public class Client
 			while (!isCancelled())
 			{
 				//fifo.add((double)workers.get(index++).resultQ.peek());
-				if(workers.get(index).resultQ.peek() != null)
+				fifo.add((double)Worker.resultQ.poll());
+				/*if(workers.get(index).resultQ.peek() != null)
 				{
 					//System.out.println("test print : " + workers.get(index++).resultQ.peek() + ", " + workers.get(index++).resultQ.poll());
 					fifo.add((double)workers.get(index++).resultQ.peek());
 					results.add(workers.get(index).resultQ.poll());
 					if(index >= workers.size())
 						break;
-				}
+				}*/
 				
 				if (fifo.size() > 100)
 					fifo.removeFirst();
