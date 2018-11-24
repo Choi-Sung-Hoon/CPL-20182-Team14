@@ -1,10 +1,7 @@
 import java.io.IOException;
-import java.util.Scanner;
 import java.util.concurrent.ConcurrentLinkedQueue;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
-
-import javax.swing.SwingWorker;
 
 import org.knowm.xchart.QuickChart;
 import org.knowm.xchart.SwingWrapper;
@@ -23,16 +20,14 @@ public class Client
 	
 	public static void main(String[] args) throws Exception
 	{
-		Scanner scanner = new Scanner(System.in);
 		String hostname = "localhost";
 		int port = Integer.parseInt(args[0]);
-		long startTime, stopTime;
 		
 		int pool_cnt=Integer.parseInt(args[1]);
 		ExecutorService executorService=Executors.newFixedThreadPool(pool_cnt);
 		
 		ConcurrentLinkedQueue<Integer> taskQ=new ConcurrentLinkedQueue<>();
-		for(int i=1; i<=1000; i+= 1)
+		for(int i=1; i<=1000; i+= 10)
 			taskQ.offer(i);
 		
 		workers = new Worker[pool_cnt];
