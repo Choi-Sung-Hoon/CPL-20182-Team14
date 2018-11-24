@@ -18,16 +18,20 @@ public class Client
 	
 	static private Worker[] workers;
 	
+	private static int request_range=1000;
+	private static int increase_cnt=1;
+	
 	public static void main(String[] args) throws Exception
 	{
 		String hostname = "localhost";
 		int port = Integer.parseInt(args[0]);
 		
 		int pool_cnt=Integer.parseInt(args[1]);
+		
 		ExecutorService executorService=Executors.newFixedThreadPool(pool_cnt);
 		
 		ConcurrentLinkedQueue<Integer> taskQ=new ConcurrentLinkedQueue<>();
-		for(int i=1; i<=1000; i+= 10)
+		for(int i=1; i<=request_range; i+= increase_cnt)
 			taskQ.offer(i);
 		
 		workers = new Worker[pool_cnt];
@@ -64,7 +68,7 @@ public class Client
 		//sw.displayChart();
 
 		try {
-			handler = new Handler(chart, 100);
+			handler = new Handler(chart, 100, request_range, increase_cnt);
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

@@ -21,8 +21,10 @@ class Handler extends SwingWorker<Boolean, double[]> {
 	private List<Long> buffer = new ArrayList<Long>();
 	private LinkedList<Double> fifo = new LinkedList<Double>();
 	private PrintWriter writer;
+	
+	private int file_cnt;
 
-	public Handler(XYChart chart, int gatherMillis) throws IOException {
+	public Handler(XYChart chart, int gatherMillis, int request_range, int increase_cnt) throws IOException {
 		this.chart = chart;
 		this.gatherMillis = gatherMillis;
 
@@ -34,10 +36,13 @@ class Handler extends SwingWorker<Boolean, double[]> {
 		writer.println("ttime");
 
 		fifo.add(0.0);
+		
+		file_cnt = request_range/increase_cnt;
 	}
 
 	@Override
 	protected Boolean doInBackground() throws Exception {
+		int cnt=0;
 		while (!isCancelled()) {
 			long deadline = System.currentTimeMillis() + gatherMillis;
 			long sum = 0;
@@ -54,6 +59,8 @@ class Handler extends SwingWorker<Boolean, double[]> {
 				buffer.add(result);
 				sum += result;
 				count += 1;
+				
+				cnt++;
 			}
 			writer.flush();
 			
@@ -70,10 +77,36 @@ class Handler extends SwingWorker<Boolean, double[]> {
 			for (int i = 0; i < fifo.size(); i++)
 				array[i] = fifo.get(i);
 			publish(array);
+			
+			if(cnt>=file_cnt)
+				break;
 		}
 
 		writer.close();
-		return true;
+		
+		while(true)
+		{
+			long deadline = System.currentTimeMillis() + gatherMillis;
+
+			// Read results
+			while (System.currentTimeMillis() < deadline) {
+				;
+			}
+			
+			// Add to chart
+			fifo.add((double)0);
+			if (fifo.size() > 100) {
+				fifo.removeFirst();
+			}
+
+			// Publish
+			double[] array = new double[fifo.size()];
+			for (int i = 0; i < fifo.size(); i++)
+				array[i] = fifo.get(i);
+			publish(array);
+		}
+		
+//		return true;
 	}
 
 	@Override
