@@ -2,35 +2,41 @@ package cdp1.kube.testserver;
 
 import java.net.ServerSocket;
 import java.net.Socket;
+import java.util.concurrent.ConcurrentLinkedQueue;
 
 class Listener implements Runnable {
 
 	private final int mPort;
-	private final boolean mMultiThreaded;
+	private final int mThreadCount;
+	private final ConcurrentLinkedQueue<Socket> mSocketQ = new ConcurrentLinkedQueue<Socket>();
 
-	public Listener(int port, boolean multiThreaded) {
+	public Listener(int port, int threadCount) {
 		mPort = port;
-		mMultiThreaded = multiThreaded;
+		mThreadCount = threadCount;
 	}
 
 	@Override
 	public void run() {
-		System.out.println("Server multithread mode: " + Boolean.toString(mMultiThreaded));
+		Thread[] workers = new Thread[mThreadCount];
+		
+		System.out.println("Server thread count: " + Integer.toString(mThreadCount));
+		
+		// Create workers
+		for (int i = 0; i < mThreadCount; i++) {
+			Thread t = new Thread(new ServerWorker(mSocketQ));
+			t.setName("cdpk-server-worker-" + Integer.toString(i));
+			t.setDaemon(true);
+			t.start();
+			workers[i] = t;
+		}
 		
 		try (ServerSocket serverSocket = new ServerSocket(mPort)) {
 			System.out.println("Server is listening on port " + mPort);
 
 			while (true) {
 				Socket socket = serverSocket.accept();
+				mSocketQ.add(socket);
 				System.out.println("New client connected");
-
-				ServerSession session = new ServerSession(socket);
-				session.start();
-				
-				// Synchronous tasking
-				if (!mMultiThreaded) {
-					session.wait();
-				}
 			}
 
 		} catch (Exception e) {
@@ -41,8 +47,7 @@ class Listener implements Runnable {
 	}
 
 	public static void main(String[] args) {
-		int port = 0;
-		boolean multithreaded = true;
+		int port = 0, threadCount = 1;
 
 		System.out.println("Starting server...");
 
@@ -59,14 +64,18 @@ class Listener implements Runnable {
 			System.exit(1);
 		}
 		
-		// Get whether multi-threaded or not
+		// Get thread count
 		try {
-			multithreaded = Boolean.parseBoolean(args[1]);
+			threadCount = Integer.parseInt(args[1]);
 		} catch (ArrayIndexOutOfBoundsException e) {
 			;
+		} catch (NumberFormatException e) {
+			System.err.println("The thread count is invalid!");
+			System.err.flush();
+			System.exit(1);
 		}
 
-		Listener listener = new Listener(port, multithreaded);
+		Listener listener = new Listener(port, threadCount);
 		listener.run();
 
 		System.out.println("Closing server...");
