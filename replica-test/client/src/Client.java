@@ -1,4 +1,5 @@
 import java.io.BufferedReader;
+import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.OutputStream;
@@ -23,7 +24,7 @@ import org.knowm.xchart.XYChart;
  */
 public class Client
 {
-	MySwingWorker mySwingWorker;
+	Handler handler;
 	SwingWrapper<XYChart> sw;
 	XYChart chart;
 	
@@ -55,10 +56,9 @@ public class Client
 		Client swingWorkerRealTime = new Client();
 		swingWorkerRealTime.go();
 		
-				
-		//System.out.println("Client End.");
-		//scanner.close();
 		executorService.shutdown();
+		
+		return;
 	}
 
 	private void go()
@@ -74,73 +74,16 @@ public class Client
 		chart.getStyler().setYAxisMin(0.0);
 
 		// Show it
-		sw = new SwingWrapper<XYChart>(chart);
-		sw.displayChart();
+		//sw = new SwingWrapper<XYChart>(chart);
+		//sw.displayChart();
 
-		mySwingWorker = new MySwingWorker();
-		mySwingWorker.execute();
+		try {
+			handler = new Handler(chart, 100);
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		handler.execute();
 	}
 
-	private class MySwingWorker extends SwingWorker<Boolean, double[]>
-	{
-		LinkedList<Double> fifo = new LinkedList<Double>();
-
-		public MySwingWorker()
-		{
-			fifo.add(0.0);
-		}
-
-		@Override
-		protected Boolean doInBackground() throws Exception
-		{
-			while (!isCancelled())
-			{
-				if(Worker.resultQ.peek() == null)
-					continue;
-				fifo.add((double)Worker.resultQ.poll());
-				
-				if (fifo.size() > 100)
-					fifo.removeFirst();
-
-				double[] array = new double[fifo.size()];
-				for (int i = 0; i < fifo.size(); i++)
-					array[i] = fifo.get(i);
-				publish(array);
-
-				try
-				{
-					Thread.sleep(100);
-				}
-				catch (InterruptedException e)
-				{
-					System.out.println("Error : " + e.getMessage());
-					System.exit(1);
-				}
-			}
-
-			return true;
-		}
-
-		@Override
-		protected void process(List<double[]> chunks)
-		{
-			//System.out.println("number of chunks: " + chunks.size());
-			
-			double[] mostRecentDataSet = chunks.get(chunks.size() - 1);
-			chart.updateXYSeries("Benchmark", null, mostRecentDataSet, null);
-			sw.repaintChart();
-
-			long start = System.currentTimeMillis();
-			long duration = System.currentTimeMillis() - start;
-			try
-			{
-				Thread.sleep(40 - duration); // 40 ms ==> 25fps
-			}
-			catch (InterruptedException e)
-			{
-				System.out.println("Error : " + e.getMessage());
-				System.exit(1);
-			}
-		}
-	}
 }
