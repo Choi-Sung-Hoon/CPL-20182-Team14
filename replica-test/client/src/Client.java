@@ -1,12 +1,17 @@
 import java.io.BufferedReader;
+import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.OutputStream;
 import java.io.PrintWriter;
 import java.net.Socket;
+import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Scanner;
+import java.util.concurrent.ConcurrentLinkedQueue;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 
 import javax.swing.SwingWorker;
 
@@ -19,10 +24,11 @@ import org.knowm.xchart.XYChart;
  */
 public class Client
 {
-	MySwingWorker mySwingWorker;
+	Handler handler;
 	SwingWrapper<XYChart> sw;
 	XYChart chart;
-	static double elapsedTime = 0.0;
+	
+	static private Worker[] workers;
 	
 	public static void main(String[] args) throws Exception
 	{
@@ -31,40 +37,28 @@ public class Client
 		int port = Integer.parseInt(args[0]);
 		long startTime, stopTime;
 		
+		int pool_cnt=Integer.parseInt(args[1]);
+		ExecutorService executorService=Executors.newFixedThreadPool(pool_cnt);
+		
+		ConcurrentLinkedQueue<Integer> taskQ=new ConcurrentLinkedQueue<>();
+		for(int i=1; i<=1000; i+= 1)
+			taskQ.offer(i);
+		
+		workers = new Worker[pool_cnt];
+		for(int i=0; i<pool_cnt; i++)
+		{
+			workers[i] = new Worker(taskQ, hostname, port);
+			executorService.execute(workers[i]);
+		}
+		
+		
 		// create a graph
 		Client swingWorkerRealTime = new Client();
 		swingWorkerRealTime.go();
 		
-		for(int i = 1; i <= 5000; i += 10){
-			try(Socket socket = new Socket(hostname, port))
-			{
-				System.out.println("Client is connected");
-				
-				InputStream input = socket.getInputStream();
-				OutputStream output = socket.getOutputStream();
-				BufferedReader reader = new BufferedReader(new InputStreamReader(input));
-				PrintWriter writer = new PrintWriter(output, true);
-				String response;
-				
-				// input
-				writer.println(Integer.toString(i));
-				
-				startTime = System.currentTimeMillis();
-				while((response=reader.readLine())!=null)
-					System.out.println(response);
-				stopTime = System.currentTimeMillis();
-	
-				elapsedTime = stopTime - startTime;
-				System.out.println("Time : " + elapsedTime);
-			}
-			catch(Exception e)
-			{
-				e.printStackTrace();
-			}
-		}
+		executorService.shutdown();
 		
-		//System.out.println("Client End.");
-		//scanner.close();
+		return;
 	}
 
 	private void go()
@@ -80,71 +74,16 @@ public class Client
 		chart.getStyler().setYAxisMin(0.0);
 
 		// Show it
-		sw = new SwingWrapper<XYChart>(chart);
-		sw.displayChart();
+		//sw = new SwingWrapper<XYChart>(chart);
+		//sw.displayChart();
 
-		mySwingWorker = new MySwingWorker();
-		mySwingWorker.execute();
+		try {
+			handler = new Handler(chart, 100);
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		handler.execute();
 	}
 
-	private class MySwingWorker extends SwingWorker<Boolean, double[]>
-	{
-		LinkedList<Double> fifo = new LinkedList<Double>();
-
-		public MySwingWorker()
-		{
-			fifo.add(0.0);
-		}
-
-		@Override
-		protected Boolean doInBackground() throws Exception
-		{
-			while (!isCancelled())
-			{
-				fifo.add(elapsedTime);
-				
-				if (fifo.size() > 100)
-					fifo.removeFirst();
-
-				double[] array = new double[fifo.size()];
-				for (int i = 0; i < fifo.size(); i++)
-					array[i] = fifo.get(i);
-				publish(array);
-
-				try
-				{
-					Thread.sleep(100);
-				}
-				catch (InterruptedException e)
-				{
-					System.out.println("Error : " + e.getMessage());
-					System.exit(1);
-				}
-			}
-
-			return true;
-		}
-
-		@Override
-		protected void process(List<double[]> chunks)
-		{
-			//System.out.println("number of chunks: " + chunks.size());
-			
-			double[] mostRecentDataSet = chunks.get(chunks.size() - 1);
-			chart.updateXYSeries("Benchmark", null, mostRecentDataSet, null);
-			sw.repaintChart();
-
-			long start = System.currentTimeMillis();
-			long duration = System.currentTimeMillis() - start;
-			try
-			{
-				Thread.sleep(40 - duration); // 40 ms ==> 25fps
-			}
-			catch (InterruptedException e)
-			{
-				System.out.println("Error : " + e.getMessage());
-				System.exit(1);
-			}
-		}
-	}
 }
