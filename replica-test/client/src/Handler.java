@@ -55,8 +55,7 @@ class Handler extends SwingWorker<Boolean, double[]> {
 				sum += result;
 				count += 1;
 			}
-			
-			writer.flush(); 
+			writer.flush();
 			
 			// Add to chart
 			if (count != 0) {
