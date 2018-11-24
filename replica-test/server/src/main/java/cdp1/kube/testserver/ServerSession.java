@@ -24,8 +24,9 @@ class ServerSession extends Thread {
 			PrintWriter writer = new PrintWriter(output, true);
 			
 			String text;
-			long n, prime;
-			
+			int n;
+			long prime;
+
 			text = reader.readLine();
 			n = Integer.parseInt(text);
 			prime = new ServerLogic(n).getNthPrimeNumber();
