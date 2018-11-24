@@ -26,7 +26,6 @@ public class Client
 	MySwingWorker mySwingWorker;
 	SwingWrapper<XYChart> sw;
 	XYChart chart;
-	static double elapsedTime = 0.0;
 	
 	static private Worker[] workers;
 	
@@ -96,7 +95,9 @@ public class Client
 		{
 			while (!isCancelled())
 			{
-				fifo.add((double)Worker.resultQ.peek());
+				if(Worker.resultQ.peek() == null)
+					continue;
+				fifo.add((double)Worker.resultQ.poll());
 				
 				if (fifo.size() > 100)
 					fifo.removeFirst();
