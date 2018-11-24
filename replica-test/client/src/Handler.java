@@ -4,7 +4,9 @@ import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 
+import javax.swing.JFrame;
 import javax.swing.SwingWorker;
+import javax.swing.WindowConstants;
 
 import org.knowm.xchart.SwingWrapper;
 import org.knowm.xchart.XYChart;
@@ -25,7 +27,8 @@ class Handler extends SwingWorker<Boolean, double[]> {
 		this.gatherMillis = gatherMillis;
 
 		wrapper = new SwingWrapper<XYChart>(chart);
-		wrapper.displayChart();
+		JFrame frame = wrapper.displayChart();
+		frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
 		
 		writer = new PrintWriter(OUTPUT_FILE_NAME, "UTF-8");
 		writer.println("ttime");
@@ -52,6 +55,7 @@ class Handler extends SwingWorker<Boolean, double[]> {
 				sum += result;
 				count += 1;
 			}
+			writer.flush();
 			
 			// Add to chart
 			if (count != 0) {
