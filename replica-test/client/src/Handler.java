@@ -12,8 +12,8 @@ import org.knowm.xchart.SwingWrapper;
 import org.knowm.xchart.XYChart;
 
 class Handler extends SwingWorker<Boolean, double[]> {
-	
-	public static String OUTPUT_FILE_NAME = "replica-test.tsv"; 
+
+	public static String OUTPUT_FILE_NAME = "replica-test.tsv";
 
 	private int gatherMillis;
 	private final XYChart chart;
@@ -21,7 +21,7 @@ class Handler extends SwingWorker<Boolean, double[]> {
 	private List<Long> buffer = new ArrayList<Long>();
 	private LinkedList<Double> fifo = new LinkedList<Double>();
 	private PrintWriter writer;
-	
+
 	private int file_cnt;
 
 	public Handler(XYChart chart, int gatherMillis, int request_range, int increase_cnt) throws IOException {
@@ -31,18 +31,18 @@ class Handler extends SwingWorker<Boolean, double[]> {
 		wrapper = new SwingWrapper<XYChart>(chart);
 		JFrame frame = wrapper.displayChart();
 		frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
-		
+
 		writer = new PrintWriter(OUTPUT_FILE_NAME, "UTF-8");
 		writer.println("ttime");
 
 		fifo.add(0.0);
-		
-		file_cnt = request_range/increase_cnt;
+
+		file_cnt = request_range / increase_cnt;
 	}
 
 	@Override
 	protected Boolean doInBackground() throws Exception {
-		int cnt=0;
+		int cnt = 0;
 		while (!isCancelled()) {
 			long deadline = System.currentTimeMillis() + gatherMillis;
 			long sum = 0;
@@ -50,7 +50,7 @@ class Handler extends SwingWorker<Boolean, double[]> {
 
 			// Read results
 			while (System.currentTimeMillis() < deadline) {
-				Long result = Worker.resultQ.poll(); 
+				Long result = Worker.resultQ.poll();
 				if (result == null) {
 					Thread.sleep(10);
 					continue;
@@ -59,17 +59,19 @@ class Handler extends SwingWorker<Boolean, double[]> {
 				buffer.add(result);
 				sum += result;
 				count += 1;
-				
+
 				cnt++;
 			}
 			writer.flush();
-			
+
 			// Add to chart
 			if (count != 0) {
-				fifo.add((double)sum / count);
-				if (fifo.size() > 100) {
-					fifo.removeFirst();
-				}
+				fifo.add((double) sum / count);
+			} else {
+				fifo.add(fifo.getLast());
+			}
+			if (fifo.size() > 70) {
+				fifo.removeFirst();
 			}
 
 			// Publish
@@ -77,25 +79,24 @@ class Handler extends SwingWorker<Boolean, double[]> {
 			for (int i = 0; i < fifo.size(); i++)
 				array[i] = fifo.get(i);
 			publish(array);
-			
-			if(cnt>=file_cnt)
+
+			if (cnt >= file_cnt)
 				break;
 		}
 
 		writer.close();
-		
-		while(true)
-		{
+
+		while (true) {
 			long deadline = System.currentTimeMillis() + gatherMillis;
 
 			// Read results
 			while (System.currentTimeMillis() < deadline) {
 				;
 			}
-			
+
 			// Add to chart
-			fifo.add((double)0);
-			if (fifo.size() > 100) {
+			fifo.add((double) 0);
+			if (fifo.size() > 70) {
 				fifo.removeFirst();
 			}
 
@@ -105,7 +106,7 @@ class Handler extends SwingWorker<Boolean, double[]> {
 				array[i] = fifo.get(i);
 			publish(array);
 		}
-		
+
 //		return true;
 	}
 
@@ -118,7 +119,7 @@ class Handler extends SwingWorker<Boolean, double[]> {
 		long start = System.currentTimeMillis();
 		long duration = System.currentTimeMillis() - start;
 		try {
-			Thread.sleep(40 - duration); // 40 ms ==> 25fps
+			Thread.sleep(20 - duration); // 40 ms ==> 25fps
 		} catch (InterruptedException e) {
 			System.err.println("Error: " + e.getMessage());
 			System.exit(1);

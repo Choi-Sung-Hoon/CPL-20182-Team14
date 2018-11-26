@@ -39,9 +39,9 @@ public class Worker implements Runnable {
 
 				long startTime = System.currentTimeMillis();
 				String response = reader.readLine();
-				System.out.println(response);
 				long stopTime = System.currentTimeMillis();
 				long elapsedTime = stopTime - startTime;
+				System.out.printf("n = %4d, response = %5s, time = %4d\n", n, response, elapsedTime);
 				
 				resultQ.add(Long.valueOf(elapsedTime));
 			} catch (Exception e) {

@@ -18,8 +18,8 @@ public class Client
 	
 	static private Worker[] workers;
 	
-	private static int request_range=1000;
-	private static int increase_cnt=1;
+	private static int request_range=2000;
+	private static int increase_cnt=10;
 	
 	public static void main(String[] args) throws Exception
 	{
@@ -31,7 +31,7 @@ public class Client
 		ExecutorService executorService=Executors.newFixedThreadPool(pool_cnt);
 		
 		ConcurrentLinkedQueue<Integer> taskQ=new ConcurrentLinkedQueue<>();
-		for(int i=1; i<=request_range; i+= increase_cnt)
+		for(int i=increase_cnt; i<=request_range; i+= increase_cnt)
 			taskQ.offer(i);
 		
 		workers = new Worker[pool_cnt];
@@ -58,9 +58,9 @@ public class Client
 				new double[] { 0 });
 		chart.getStyler().setLegendVisible(false);
 		chart.getStyler().setXAxisTicksVisible(false);
-		chart.getStyler().setXAxisMax(100.0);
+		chart.getStyler().setXAxisMax(70.0);
 		chart.getStyler().setXAxisMin(0.0);
-		chart.getStyler().setYAxisMax(1000.0);
+		chart.getStyler().setYAxisMax(10000.0);
 		chart.getStyler().setYAxisMin(0.0);
 
 		// Show it
